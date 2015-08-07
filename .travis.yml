@@ -31,4 +31,4 @@ deploy:
   on:
     repo: flagadajones/cleanflight
     branch: Harakiri_PID_update
-	tags: true
+    tags: true
