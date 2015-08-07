@@ -1,33 +1,32 @@
 env:
-  - TARGET=NAZE
-  
-# use new docker environment
+- TARGET=NAZE
 sudo: false
-
 addons:
   apt:
     packages:
-      - build-essential
-      - git
-      - libc6-i386
-      - zlib1g-dev
-      - libssl-dev
-      - wkhtmltopdf
-      - libxml2-dev
-      - libxslt-dev
-
-# We use cpp for unit tests, and c for the main project.
+    - build-essential
+    - git
+    - libc6-i386
+    - zlib1g-dev
+    - libssl-dev
+    - wkhtmltopdf
+    - libxml2-dev
+    - libxslt-dev
 language: cpp
 compiler: clang
-
 before_install:
-  - curl --retry 10 --retry-max-time 120 -L "https://launchpad.net/gcc-arm-embedded/4.9/4.9-2015-q2-update/+download/gcc-arm-none-eabi-4_9-2015q2-20150609-linux.tar.bz2" | tar xfj -
-
+- curl --retry 10 --retry-max-time 120 -L "https://launchpad.net/gcc-arm-embedded/4.9/4.9-2015-q2-update/+download/gcc-arm-none-eabi-4_9-2015q2-20150609-linux.tar.bz2"
+  | tar xfj -
 install:
-  - export PATH=$PATH:$PWD/gcc-arm-none-eabi-4_9-2015q2/bin
-
+- export PATH=$PATH:$PWD/gcc-arm-none-eabi-4_9-2015q2/bin
 before_script: arm-none-eabi-gcc --version
-script: ./.travis.sh
-
+script: "./.travis.sh"
 cache: apt
-
+deploy:
+  provider: releases
+  api_key:
+    secure: Ta2zjBdjhca+vqvHsBAbtqPzDfcO3bcQ8hwsonE+rvb5ZPwWYpp/EmtTvq0mQtv6ecPinuF68MiRt8l10JrzeEiJ8adEfb16gjza2aC79jWvstRmtwId2C3Dj1y9G3VB5i9DGCZYFlMS4RI3il3Pxg/UZ2PztKxh5Vvs2arbRG2ZArQtchTML2IRYYsrCvvIioT/R2Dk+v1xADYYou9jxsPxBav3ie37fstIohD9jsRbqQNmZU6jEDxIDWxBUSW9U291aCXBNhXc12V77ms1i9/ktJEGotcCFZ//41JWCbRzUonNKAb6qoipY/mSQ1i5Ut9kDl5PMWdgsEFVDD3T87Kln2p6dxscfun7IlyJQ0kNAe6HHwp2cHD/Mh6Kl83hG8IDRGw4micw78S6x2pcNqTYOmIFPxmkIzkKJrZBYseDNnwJReb+SHPK7VJ4vqYo+pAB8j5OKSCnA0GThmD1HLu+h7tSh25lJ0yVOHJ+B89AVhdmH+ax+pso4K+SgOk00X5REnGP10vpimFS0GdmxwTc2Vmtu4ILxMZ9jAACxn8XCpHM6FLjYTH9lBk7wacHvtrlD20K7nUT2tdecwlhAnWVwMoa5NleobvawO6Ly/wQd+UrkvXmKY0/uH6eP9+D+1Yq7p0AHTFX6mtmpLLsUCJqAs7L9iXxcQASTUMqJ58=
+  file: obj/cleanflight_NAZE.hex
+  on:
+    repo: flagadajones/cleanflight
+    branch: Harakiri_PID_update
