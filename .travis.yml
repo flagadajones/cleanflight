@@ -1,7 +1,4 @@
 env:
-  - RUNTESTS=True
-  - PUBLISHMETA=True
-  - PUBLISHDOCS=True
   - TARGET=NAZE
   
 # use new docker environment
